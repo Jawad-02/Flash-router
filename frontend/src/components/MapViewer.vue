@@ -545,10 +545,12 @@ watch(() => props.isDarkMode, (isDark) => {
   if (!map || !tileLayer) return
   tileLayer.remove()
   const url = isDark
-    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-    : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+    ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+    : 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
   tileLayer = L.tileLayer(url, {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+    maxNativeZoom: 16,
+    maxZoom: 20,
   }).addTo(map)
   if (mapContainer.value) {
     mapContainer.value.classList.toggle('light-mode', !isDark)
@@ -571,8 +573,10 @@ onMounted(() => {
     attributionControl: false,
   })
 
-  tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+  tileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+    maxNativeZoom: 16,
+    maxZoom: 20,
   }).addTo(map)
 
   L.control.zoom({ position: 'bottomright' }).addTo(map)
